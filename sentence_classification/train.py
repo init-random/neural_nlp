@@ -58,7 +58,7 @@ val_fn = theano.function([x, target_var], [test_loss, test_acc])
 ########################################################################################################################
 # train
 ########################################################################################################################
-num_epochs = 50
+num_epochs = 25
 
 for epoch in range(num_epochs):
     # In each epoch, we do a full pass over the training data:
