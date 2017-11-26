@@ -9,20 +9,29 @@ from neural_nlp.io import download_data
 
 
 class ReutersDataGen:
+
     """
-    Utility class to parse Reuters-21578 SGML file and iterate over the documents .
+    Utility class to parse Reuters-21578 SGML files and iterate over the documents. This class is a generator over the
+    documents. Each document is represented as a dictionary with the fields
+     - body: body text
+     - title: title
+     - topics: list of topics
+     - mode: train or test which is derived from the split value
+
+    TODO: parse additional fields from the SGML files.
+
+    :param str or None split: May be cgisplit, lewissplit, modapte, or None, which is no split
     """
 
     _data_name = 'reuters'
     _download_url= 'http://archive.ics.uci.edu/ml/machine-learning-databases/reuters21578-mld/reuters21578.tar.gz'
 
-    def __init__(self, split=None, data_path=None):
+    def __init__(self, split=None):
         splits = ['cgisplit', 'lewissplit', 'modapte', None]
         if split not in splits:
             warnings.warn('UNKNOWN SPLIT TYPE')
             split = 'unknown'
         self.split = split
-        self.data_path = data_path
         self.datagen = None
 
     def __iter__(self):
