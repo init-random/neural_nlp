@@ -1,5 +1,4 @@
 import os
-import tarfile
 import warnings
 
 from glob import glob
