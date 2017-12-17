@@ -2,4 +2,8 @@ _x
 .idea
 __pycache__
 
+*/integrations/models/*
+*/integrations/logging/*
+!*/integrations/models/README
+!*/integrations/logging/README
 
