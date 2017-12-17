@@ -38,13 +38,14 @@ def get_data(download_url, data_name, data_path=None, untar=False):
         print('downloading dataset (once and for all) into %s' % data_path)
         os.mkdir(data_path)
 
-        def progress(blocknum, bs, size):
-            total_sz_mb = '%.2f MB' % (size / 1e6)
-            current_sz_mb = '%.2f MB' % ((blocknum * bs) / 1e6)
-            print('\rdownloaded %s / %s' % (current_sz_mb, total_sz_mb),
-                  end='')
+    def progress(blocknum, bs, size):
+        total_sz_mb = '%.2f MB' % (size / 1e6)
+        current_sz_mb = '%.2f MB' % ((blocknum * bs) / 1e6)
+        print('\rdownloaded %s / %s' % (current_sz_mb, total_sz_mb),
+              end='')
 
-        archive_path = os.path.join(data_path, archive_filename)
+    archive_path = os.path.join(data_path, archive_filename)
+    if not os.path.exists(archive_path):
         urllib.request.urlretrieve(download_url, filename=archive_path,
                                    reporthook=progress)
         print('\r', end='')
