@@ -1,18 +1,10 @@
 from keras.layers import Dense, Input, dot, concatenate
 from keras.models import Model
-import numpy as np
-import lasagne
-import theano.tensor as T
-import theano
-from scipy.sparse import coo_matrix
-import cytoolz.curried as z
-from neural_nlp.toolz import toolz
-
 
 
 def create_model(feature_dim, n_negative_samples=3):
-    _hidden = Dense(250, activation='relu', name='h1')
-    _encoding = Dense(128, activation='sigmoid', name='e1')
+    _hidden = Dense(250, activation='tanh', name='h1')
+    _encoding = Dense(128, activation='tanh', name='e1')
 
     def shared_encoding(input, hidden, encoding):
         h = hidden(input)
@@ -43,7 +35,7 @@ def create_model(feature_dim, n_negative_samples=3):
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
-    encoder = Model(inputs=q_input, outputs=encodings[0])
+    encoder = Model(inputs=q_input, outputs=q_enc)
     encoder.compile(optimizer='adam',
                    loss='categorical_crossentropy',
                    metrics=['accuracy'])
