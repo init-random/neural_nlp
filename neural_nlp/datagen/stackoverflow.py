@@ -38,7 +38,7 @@ class StackOverflow:
         with open(paths['titles'], 'r') as t_fh,\
              open(paths['labels'], 'r') as l_fh:
             for l, t in zip(l_fh, t_fh):
-                yield l, t
+                yield int(l.strip()), t.strip()
 
     def by_label_writer(self):
         fns = self.filenames()
@@ -71,7 +71,7 @@ class StackOverflow:
 
         readers = [self.infinite_iter(fn) for fn in glob.glob(label_dir)]
         for l, t in self.data_gen():
-            _l = int(l.strip()) - 1
+            _l = l - 1
             # get pos/neg dssm samples
             pos = next(readers[_l])
             if pos == t:
