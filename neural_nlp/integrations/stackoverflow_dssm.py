@@ -40,7 +40,6 @@ def main(identifier, epochs=10, batch_sz=128):
     n_records = reduce(lambda a, b: a+b[0].shape[0], so.batcher(), 0)
 
     meta_misc['train_records'] = n_records
-    # meta_misc['test_records'] = n_test_records
 
     logging.info(model.metrics_names)
 
@@ -57,22 +56,14 @@ def main(identifier, epochs=10, batch_sz=128):
         epoch_time.set_epoch_start_time()
         logging.info('// EPOCH: %s //' % str(epoch))
 
-        # gen_data = batch_generator(meta_misc['train'], feature_dim, batch_sz,
-        #                            tfidf=True, tfidf_data=tfidf_data, occ_groups=occ_groups, multioutput=multioutput,
-        #                            targets_in_1k=targets_in_1k, dropout=dropout,
-        #                            exclude_skills=exclude_skills, exclude_edu=exclude_edu, exclude_exp=exclude_exp)
-
         for batch_num, batch in enumerate(so.batcher()):
             metrics = model.train_on_batch(batch, [[1,0,0,0]]*batch[0].shape[0])
             if batch_num % 10 == 0:
                 epoch_time.hms_message(epoch, batch_num + 1, str(metrics))
 
-
-        logging.info(eval)
-
         model_file = 'models/model_dssm_%s_e%d.h5' % (meta_data.run_timestamp(), epoch)
         logging.info('// SAVING CHECKPOINT: %s //' % model_file)
-        model.save(model_file)
+        encoder.save(model_file)
 
 
 if __name__ == '__main__':
